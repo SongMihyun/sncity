@@ -39,14 +39,12 @@ $(function(){
 });
 
 //<공통> 자동 슬라이드 (i,3000(인터벌시간),500(슬라이드시간))
-// i >div.banner >div.slideContainer >div.bannerArea >ul.area >li>a>img(p)
-function bannerSlide(i,j,k){
-    const slideBanner=i.find('.area');
-    const slideBannerList=slideBanner.children('li');
-    const slideBannerList_first=slideBannerList.eq('0');
-    const slideWidth=slideBannerList_first.width();
-    const listCount=slideBannerList.length;
-    idx=slideBanner.find('li:first').attr('title');
+// i(bannerWrap) >div.banner >div.slideContainer >div.bannerArea >ul.area >li>a>img(p)
+/* function bannerSlide(i,j,k){
+    let slideBanner=i.find('.area');
+    let slideWidth=i.find('li:first').width();
+    let listCount=i.find('li').length;
+    let idx=slideBanner.find('li:first').attr('title');
     let setIntervalId;
     
     i.find('.idx').html(idx+' / '+listCount);
@@ -56,49 +54,52 @@ function bannerSlide(i,j,k){
             slideBanner.css({left: 0})
             idx=slideBanner.find('li:first').attr('title');
             i.find('.idx').html(idx+' / '+listCount);
-        })
+        });
     },j)
 
-    const nextBtn=i.find('.next');
-    const prevBtn=i.find('.prev');
-    const pauseBtn=i.find('.pause');
-    const playBtn=i.find('.play');
+    let nextBtn=i.find('.next');
+    let prevBtn=i.find('.prev');
+    let pauseBtn=i.find('.pause');
+    let playBtn=i.find('.play');
     nextBtn.click(function(){
-        clearInterval(setIntervalId);
         rightBtn(k);
     });
     prevBtn.click(function(){
-        clearInterval(setIntervalId);
         leftBtn(k);
     });
     pauseBtn.click(function(){
-        clearInterval(setIntervalId)
+        clearInterval(setIntervalId);
         pauseBtn.addClass('blind');
         playBtn.removeClass('blind');
     });
     playBtn.click(function(){
-        bannerSlide(i,j,k)
+        bannerSlide(i,j,k);
         playBtn.addClass('blind');
         pauseBtn.removeClass('blind');
     });
     function rightBtn(k){
+        slideWidth=slideBanner.find('li:first').width();
         slideBanner.stop().animate({left:-(slideWidth)},k,function(){
             slideBanner.find('li:first').insertAfter(slideBanner.find('li:last'));
             slideBanner.css({left: 0})
             idx=slideBanner.find('li:first').attr('title');
             i.find('.idx').html(idx+' / '+listCount);
+            console.log(slideWidth);
         })
     }
     function leftBtn(k){
+        idx=slideBanner.find('li:last').attr('title');
+        slideWidth=slideBanner.find('li:last').width();
         slideBanner.find('li:last').insertBefore(slideBanner.find('li:first'));
-        slideBanner.css({left:-(slideWidth)}).stop().animate({left:0},k,function(){
-            idx=slideBanner.find('li:first').attr('title');
+        slideBanner.css({left:(-slideWidth)}).stop().animate({left:0},k,function(){
             i.find('.idx').html(idx+' / '+listCount);
+            console.log(slideWidth);
         })
        
 
         
     }
+    
     i.find('.bannerArea').on('mouseover', function(){
         clearInterval(setIntervalId);
     });
@@ -115,32 +116,9 @@ function bannerSlide(i,j,k){
 
     
 }
+ */
 
-
-// 슬라이드 컨트롤 버튼 설정
-/* slideBanner,nextBtn,prevBtn,pauseBtn,playBtn.on('mouseover', function(){
-    clearInterval(setIntervalId);
-});
-
-slideBanner,nextBtn,prevBtn,pauseBtn,playBtn.on('mouseout', function(){
-    bannerSlide(i,j,k);
-}); */
-
-//버튼 컨트롤러
-
-/* function controlBtn(i,j,k){
-    const slideBanner=i.find('.area');
-    const slideBannerList=slideBanner.children('li');
-    const slideWidth=slideBannerList.width();
-    const listCount=slideBannerList.length;
-    let idx=1;
-    
-} */
-
-
-
-
-
+/* 
 // 2섹션 인기검색어 슬라이드
 const keyword=$('.keywordAreaWrap');
 bannerSlide(keyword,3000,1000);
@@ -162,6 +140,7 @@ bannerSlide(sec5Left_eventListWrap,3000,1000);
 const sec5Right_snsZone=$('.section5 .sec5Right')
 bannerSlide(sec5Right_snsZone,2000,500);
 
+ */
 
 
 
@@ -169,23 +148,6 @@ bannerSlide(sec5Right_snsZone,2000,500);
 
 
 
-
-
-
-
-/* $('.slideBtn, .bannerArea').on('mouseover', function(){
-    clearInterval(setIntervalId)
-});
-$('.slideBtn, .bannerArea').on('mouseout', function(){
-    bannerSlide()
-}); */
-
-/* function rightBtn(){
-    slideBanner.stop().animate({left:-(slideWidth)},500,function(){
-        $('.bannerArea .area li:first').insertAfter('.bannerArea .area li:last');
-        slideBanner.css({left: 0})
-    })
-} */
 
 
 
@@ -217,75 +179,136 @@ $(function(){
     });
 });
 
-/* function rightBtn4(){
-    slideBanner4.stop().animate({left:-(slideWidth4)},500,function(){
-        $('.bannerArea4 .area4 li:first').insertAfter('.bannerArea4 .area4 li:last');
-        slideBanner4.css({left: 0})
+// 2섹션 keywordList 슬라이드
+const keywordListWrap=$('.keywordAreaWrap');
+bannerSlide(keywordListWrap,1000,500);
+
+// 2섹션 메인 슬라이드
+const section2Main_left=$('.section2Main_left');
+bannerSlide(section2Main_left,3000,500);
+
+// 4섹션 noticeThumbSlider 슬라이드
+const sec4Right=$('.sec4Right');
+bannerSlide(sec4Right,2000,500);
+
+// 5섹션 sec5Left 슬라이드
+const sec5Left=$('.sec5Left');
+bannerSlide(sec5Left,3000,1000);
+
+// 5섹션 sec5Right 슬라이드
+const sec5Right=$('.sec5Right');
+bannerSlide(sec5Right,2000,500);
+
+
+
+
+
+//<공통 형식> 자동 슬라이드 (i,3000(인터벌시간),500(슬라이드시간))
+//(슬라이드) i >.bannerWrap >div.banner >div.slideContainer >div.bannerArea >ul.banner_Ul >li>a>img(p)
+//(컨트롤버튼) i >.bannerWrap >div.slide_control >div.slideBtn >button.prev,.next
+//()
+
+function bannerSlide(i,j,k){
+    let bannerWrap=i.find('.bannerWrap');
+    let slideBanner=i.find('.banner_Ul');
+    let slideBannerList=slideBanner.find('li');
+    let slideBannerList_first=slideBanner.find('li:first');
+    let slideBannerList_last=slideBanner.find('li:last');
+    let slideWidth=slideBannerList_first.width();
+    const listCount=slideBannerList.length;
+    let idx=1;
+    let setIntervalId;
+    let auto=1;
+    
+    //컨트롤 버튼 클릭이벤트
+    const prevBtn=i.find('.prev');
+    const nextBtn=i.find('.next');
+    const pauseBtn=i.find('.pause');
+    const playBtn=i.find('.play');
+    
+
+//페이지 출력
+i.find('.idx').html(idx+' / '+listCount);
+
+   
+   
+
+
+    //다음화면으로 넘기기
+    function next(){
+        slideWidth=slideBannerList_first.width();
+        slideBanner.stop().animate({left:-(slideWidth)},k,function(){
+        slideBannerList_first.insertAfter(slideBannerList_last);
+        slideBanner.css({left: 0});
+        slideBannerList_first=slideBanner.find('li:first');
+        slideBannerList_last=slideBanner.find('li:last');
+        idx=slideBannerList_first.attr('role');
+        
+        i.find('.idx').html(idx+' / '+listCount);
+
+
     })
+    }
+    //이전으로 돌아가기
+    function prev(){
+        slideBannerList_last.insertBefore(slideBannerList_first);
+        slideWidth=slideBannerList_last.width();
+        slideBanner.css({left: -(slideWidth)});
+        slideBanner.stop().animate({left:(0)},k,function(){
+        slideBannerList_first=slideBanner.find('li:first');
+        slideBannerList_last=slideBanner.find('li:last');
+        idx=slideBannerList_first.attr('role');
+        i.find('.idx').html(idx+' / '+listCount);
+        })
+    }
+    function stop(){
+        clearInterval(setIntervalId);
+    }
+    nextBtn.click(function(){
+        next();
+    });
+    prevBtn.click(function(){
+        prev();
+    });
+    pauseBtn.click(function(){
+        pauseBtn.addClass('blind');
+        playBtn.removeClass('blind');
+       act0();
+       stop();
+        
+    });
+
+    playBtn.click(function(){
+        pauseBtn.removeClass('blind');
+        playBtn.addClass('blind');
+        act1();
+        play();
+    });
+
+    
+
+    function act1(){auto=1;}
+    function act0(){auto=0;}
+
+    play();
+    function play(){
+        auto=1;
+        bannerWrap.on('mouseover',act0);
+        setIntervalId=setInterval(() =>{
+       
+         
+        
+        if(auto==1){
+            next();   
+            bannerWrap.on('mouseout',act1);
+        }else{
+            act0();
+        }
+        
+        },j);
+    }
+    
+  
+
+
 }
-function leftBtn4(){
-    $('.bannerArea4 .area4 li:last').insertBefore('.bannerArea4 .area4 li:first');
-    slideBanner4.css({left:-(slideWidth4)}).stop().animate({left:0},500)
-}
-$('.slideBtn4>.next').click(function(){
-    rightBtn4()
-});
-$('.slideBtn4>.prev').click(function(){
-    leftBtn4()
-});
-$('.slideBtn4>.pause').click(function(){
-    clearInterval(setIntervalId4)
-    $('.slideBtn4>.pause').addClass('blind');
-    $('.slideBtn4>.play').removeClass('blind');
-});
-$('.slideBtn4>.play').click(function(){
-    bannerSlide4()
-    $('.slideBtn4>.play').addClass('blind');
-    $('.slideBtn4>.pause').removeClass('blind');
-});
- */
-
-
-
-
-
-/* function rightBtn4(){
-    slideBanner4.stop().animate({left:-(slideWidth4)},500,function(){
-        $('.bannerArea4 .area4 li:first').insertAfter('.bannerArea4 .area4 li:last');
-        slideBanner4.css({left: 0})
-    })
-}
-$('.slideBtn4>.next').click(function(){
-    rightBtn4()
-});
-function leftBtn4(){
-    $('.bannerArea4 .area4 li:last').insertBefore('.bannerArea4 .area4 li:first');
-    slideBanner4.css({left:-(slideWidth4)}).stop().animate({left:0},500)
-}
-$('.slideBtn4>.prev').click(function(){
-    leftBtn4()
-});
-$('.slideBtn4>.pause').click(function(){
-    clearInterval(setIntervalId4)
-    $('.slideBtn4>.pause').addClass('blind');
-    $('.slideBtn4>.play').removeClass('blind');
-});
-$('.slideBtn4>.play').click(function(){
-    bannerSlide4()
-    $('.slideBtn4>.play').addClass('blind');
-    $('.slideBtn4>.pause').removeClass('blind');
-});
- */
-
-
-
-
-
-
-
-
-
-
-
-
-
